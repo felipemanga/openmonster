@@ -1,0 +1,19 @@
+EXTENDS:"GO",
+ty:0,
+y:0,
+sprite:null,
+
+CONSTRUCTOR:function(){
+    SUPER();
+    var s = this.sprite = this.add( "sprite", 0, 0, "sprites/logo.png" );
+    s.x = Math.floor(this.game.width*0.5 - s.width*0.5);
+    this.ty = Math.floor(this.game.height*0.5 - s.height*0.5);
+    this.y = -this.sprite.height;
+},
+
+onTick:function(){
+    var d = (this.y - this.ty) * 0.05;
+    this.y -= d;
+    this.sprite.y = Math.round(this.y);
+    if( Math.abs(d) < 0.01 ) this.call("onBootComplete");
+}

@@ -1,0 +1,7 @@
+type:"normal",
+Pwr:0,
+PP:35,
+
+applyTEF:function( a, t ){
+    debugger;
+}

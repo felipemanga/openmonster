@@ -1,0 +1,49 @@
+INJECT:["dlg", "call", "playerData"],
+
+CONSTRUCTOR:function(){
+    var start, askName, story;
+    var playerData = this.playerData, dlg = this.dlg;
+    
+    askName = {
+        msg:"Abelia: do you remember your name, at least? ",
+        cb:(name) => {
+            if( !name ){
+                askName.msg = "*sigh*... c'mon, tell me your name! ";
+                dlg.convo([askName]);
+            }else{
+                playerData.name = name;
+                dlg.convo([
+                    "Abelia: Ah, {playerData.name}. Very well."
+                ].concat(story));
+            }
+        }
+    };
+    
+    start = [
+        "Voice: Wake up, sleepy head!", 
+        "You: Wha? Where? When?",
+        {msg:"Voice: I'm Prof-", maxTime:1000},
+        "You: Who are you?!",
+        "Abelia: I'm Professor Abelia, and you're in my lab.",
+        "Abelia: You're here to sign up for the Pomkeypon Documentation Project, right?",
+        "You: Can I have a Pomkeypon? Like, a really cute one?",
+        "Abelia: *sigh*",
+        "Abelia: Let's just get you registered.",
+        askName
+    ];
+    
+    story = [
+        "Abelia: Now it's time for your briefing.",
+        "Abelia: We are working on a fancy high-tech encyclopedia called a Pomkeypex.",
+        "Abelia: The Pomkeypex will have information on all known Pomkeypon.",
+        "Abelia: For that, we need you to catch wild Pomkeypon and send them here for analysis.",
+        "{playerData.name}: And how am I going to catch a wild Pomkeypon? With a net?",
+        "Abelia: No. You'll be using these...",
+        "You got 10 PKBALLs",
+        "{playerData.name}: Oh! Cool!",
+        "Abelia: Yeah. Cool. Now off you go!",
+        () => this.call("onIntroComplete")
+    ];
+    
+    dlg.convo(start);
+}

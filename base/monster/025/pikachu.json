@@ -1,0 +1,27 @@
+{
+	"types":["electric"],
+	"frequency":7,
+	"isStarter":true,
+	"front": "monster/025/025 pikachu front.png",
+	"back":  "monster/025/025 pikachu back.png",
+	"moves":{
+		"thunder shock":1,
+		"tail whip":1,
+		"growl":5,
+		"play nice":7,
+		"quick attack":10,
+		"electro ball":13,
+		"thunder wave":18,
+		"feint":21,
+		"double team":23,
+		"spark":26,
+		"nuzzle":29,
+		"discharge":34,
+		"slam":37,
+		"thunderbolt":42,
+		"agility":45,
+		"wild charge":50,
+		"light screen":53,
+		"thunder":58
+	}
+}

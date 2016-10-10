@@ -1,0 +1,141 @@
+PROVIDES:{
+    "data.IPomkeydex":"singleton"
+},
+
+frontAtlas: {
+    "frames": {
+        "frame0": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        }
+    }
+},
+
+byId:null, 
+byName:null, 
+byFrequency:null, 
+
+CONSTRUCTOR:function(){
+    this.byId = {};
+    this.byName = {};
+
+    this.scanPkpn();
+    this.calculateFrequencies();
+},
+
+scanPkpn:function(){
+    var k, m, id, pomkey, variants;
+    for( k in FS.JSON ){
+        m = k.toLowerCase().match(/monster\/([0-9]+)\/([a-zA-Z0-9]+)\.json/);
+        if( !m ) continue;
+        id = parseInt(m[1]);
+        var name = m[2];
+        var json = FS.JSON[k];
+
+        pomkey = this.byId[id];
+        if( !pomkey ){
+            pomkey = {
+                variants:{},
+                types:[],
+                frequency:0
+            };
+        }
+
+        if( !FS.URL[json.front] )
+            json.front = "monster/" + m[1] + "/front.png";
+        if( !FS.URL[json.front] )
+            json.front = "monster/" + m[1] + "/" + m[1] + " " + name + " front.png";
+        if( !FS.URL[json.front] )
+            continue;
+
+        if( !FS.URL[json.back] )
+            json.back = "monster/" + m[1] + "/back.png";
+        if( !FS.URL[json.back] )
+            json.back = "monster/" + m[1] + "/" + m[1] + " " + name + " back.png";
+        if( !FS.URL[json.back] )
+            continue;
+
+        FS.JSON[json.front+".json"] = FS.JSON[json.front+".json"] || this.frontAtlas;
+        pomkey.variants[name] = json;
+        json.id = id;
+        json.name = json.name || name || "NO-NAME";
+        json.frequency = json.frequency || 0;
+        json.frequencyMax = 0;
+        this.byId[id] = pomkey;
+        this.byName[json.name] = json;
+    }
+},
+
+calculateFrequencies:function(){
+    var acc = 0, maxFreq = 0, maxValue = 1000000, minValue = 10;
+    for( var k in this.byName ){
+        var pomkey = this.byName[k], freq = pomkey.frequency, frequency = 1 << freq;
+        if( freq > maxFreq ) maxFreq = freq;
+        pomkey.frequencyMax = acc + frequency;
+        acc += frequency;
+    }
+    
+    var byFreq = this.byFrequency = [];
+    for( var k in this.byName ){
+        pomkey = this.byName[k];
+        pomkey.value = Math.floor( maxValue * Math.pow(1 - pomkey.frequency/maxFreq, 5) + minValue );
+        console.log( k, "value:", pomkey.value );
+        pomkey.frequencyMax /= acc;
+        byFreq[byFreq.length] = pomkey;
+    }
+},
+
+bySeed: function( seed, flags ){
+    var target = Math.abs(Math.sin( seed*49.4949 ) * 65535) % 1;
+    var list = this.byFrequency;
+    var mul = 1;
+    if( flags ){
+        var max = 0;
+        list = list.map((p) => {
+            for( var k in flags )
+                if( p[k] != flags[k] )
+                    return false;
+            
+            max += 1 << p.frequency;
+            return {
+                frequencyMax: max,
+                pkpn:p
+            };
+        }).filter((p) => !!p);
+        mul = max;
+    }
+
+    target *= mul;
+    for( var i=0; i<list.length; ++i ){
+        var p = list[i];
+        if( p.frequencyMax > target )
+            return inst(p);
+    }
+
+    console.log("bulbasauring");
+    return inst(list[0]);
+
+    function inst(desc){
+        if( desc.pkpn ) desc = desc.pkpn;
+        return (new data.Pomkey()).loadPomkey({
+            alive:true,
+            data:desc
+        });
+    }
+}

@@ -1,0 +1,17 @@
+{
+	"types":["fire"],
+	"frequency":6,
+	"isStarter":true,
+	"front": "monster/004/004 charmander front shiny.png",
+	"back":  "monster/004/004 charmander back shiny.png",
+	"moves":{
+		"scratch":1,
+		"growl":1,
+		"ember":9,
+		"leer":15,
+		"rage":22,
+		"slash":30,
+		"flamethrower":38,
+		"fire spin":46
+	}
+}

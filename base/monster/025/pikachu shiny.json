@@ -1,0 +1,7 @@
+{
+	"types":["electric"],
+	"frequency":4,
+	"isStarter":true,
+	"front": "monster/025/025 pikachu front shiny.png",
+	"back":  "monster/025/025 pikachu back shiny.png"
+}

@@ -1,0 +1,9 @@
+useInBattle:function(){
+    var desc = this.call("getEnemy");
+    this.call("addPkpn", desc, {
+        msg: this.call("isStarter") ? 
+            desc.data.name + ", I choose you!" :
+            "You caught the " + desc.data.name + "!", 
+        maxTime:2000
+    });
+}

@@ -1,0 +1,7 @@
+{
+	"types":["bug"],
+	"frequency":9,
+	"isStarter":false,
+	"front": "monster/010/010 caterpie front shiny.png",
+	"back":  "monster/010/010 caterpie back shiny.png"
+}

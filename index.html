@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <script xsrc="js/err.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/custom/phaser-no-physics.min.js"></script>
+        <script src="lib/CLAZZ.js"></script>
+        <script src="lib/localforage.nopromises.min.js"></script>
+        <script src="lib/doc.js"></script>
+        <script src="lib/Wait.js"></script>
+		<script src="lib/jszip.min.js"></script>
+		<script src="lib/fs.js"></script>
+		
+        <script src="gbfilter.js"></script>
+        <script src="gbmap.js"></script>
+        <script src="phasergame.js"></script>
+        <script src="gbdlg.js"></script>
+        <script src="ui/bag.js"></script>
+        <script src="interface/IItem.js"></script>
+        <script src="interface/IMove.js"></script>
+        <script src="gbworld.js"></script>
+        <script src="Pomkey.js"></script>
+        <script src="ui/pomkeypicker.js"></script>
+        <script src="ui/battle.js"></script>
+		
+        <script src="main.js"></script>
+        <script>DOC.app();</script>
+		
+        <style>
+            @font-face {
+              font-family: 'PressStart2P';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Press Start 2P'), local('PressStart2P-Regular'), url(pressstart2p.woff2) format('woff2');
+              unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+            }
+            
+            html, body, canvas {
+                font-family: 'PressStart2P';
+                position:absolute;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                image-rendering: crisp-edges;
+                image-rendering: pixelated;
+                image-rendering: -moz-crisp-edges;
+                background: black;
+                overflow: hidden;
+            }
+            
+            canvas {
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                margin:auto;
+            }
+        </style>
+    </head>
+    <body clazz="Main">
+    </body>
+</html>

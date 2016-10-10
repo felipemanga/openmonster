@@ -1,0 +1,25 @@
+{
+	"types":["plant", "poison"],
+	"frequency":9,
+	"isStarter":true,
+	"front": "monster/001/001 bulbasaur front.png",
+	"back":  "monster/001/001 bulbasaur back.png",
+	
+	"MaxHP":60,
+	"Att":62,
+	"Def":63,
+	"Spe":80,
+	"Spd":60,
+
+	"moves":{
+		"tackle":1,
+		"growl":1,
+		"leech seed":7,
+		"vine whip":13,
+		"poison powder":20,
+		"razor leaf":27,
+		"growth":34,
+		"sleep powder":41,
+		"solar beam":48
+	}
+}

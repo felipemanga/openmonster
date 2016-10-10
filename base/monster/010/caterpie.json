@@ -1,0 +1,12 @@
+{
+	"types":["bug"],
+	"frequency":11,
+	"isStarter":false,
+	"front": "monster/010/010 caterpie front.png",
+	"back":  "monster/010/010 caterpie back.png",
+	"moves":{
+		"tackle":1,
+		"string shot":1,
+		"bug bite":15
+	}
+}

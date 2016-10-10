@@ -1,0 +1,68 @@
+id:0,
+name:"",
+data:null,
+alive:false,
+
+level:0,
+XP:0,
+
+HP:0,
+MaxHP:0,
+Att:0,
+Def:0,
+Spe:0,
+Spd:0,
+
+moves:null,
+isWild:false,
+moveData:null,
+
+loadPomkey:function( other ){
+    var obj = data.Pomkey.properties;
+    for( var k in obj )
+        this[k] = other[k];
+    
+    if( this.id === undefined ) this.id = this.data.id;
+    if( this.name === undefined ) this.name = this.data.name;
+    if( this.XP === undefined ) this.XP = Math.floor( this.data.value * 10 * (1+Math.pow(Math.random(), 2)) );
+    this.setLevel();
+    
+    if( this.MaxHP === undefined ) this.curve("MaxHP");
+    if( this.HP === undefined ) this.HP = this.MaxHP;
+    if( this.Att === undefined ) this.curve("Att");
+    if( this.Def === undefined ) this.curve("Def");
+    if( this.Spe === undefined ) this.curve("Spe");
+    if( this.Spd === undefined ) this.curve("Spd");
+    
+    if( this.moves === undefined ) this.loadMoves();
+    else this.moves = this.moves.concat();
+
+    this.alive = this.HP > 0;
+    if( this.isWild === undefined ) this.isWild = true; 
+
+    if( this.moveData === undefined ) this.moveData = {};
+
+    console.log(this);
+    return this;
+},
+
+curve:function(prop){
+    return this[prop] = Math.floor( Math.log( this.level * 1.11 + 1.1) * 100 + (this.data[prop]||1) );
+},
+
+setLevel:function(){
+    this.level = Math.max( 1, Math.floor( Math.pow(this.XP, 1/4) )-2 );
+},
+
+loadMoves:function(){
+    this.moves = [];
+    if( this.data && this.data.moves ){
+        var ml = this.data.moves;
+        for( var k in ml ){
+            if( this.level >= ml[k] )
+                this.moves.push(k);
+        }
+        while( this.moves.length > 4 )
+            this.moves.splice( Math.floor(Math.random() * this.moves.length) );
+    }
+}
